@@ -16,7 +16,7 @@ Keyword: Backup Configuration ESXi Host
 
 $serverIp = Read-Host 'What is the server ip address:'
 $path = Read-Host 'Give path where backup configuration will be stored:'
-$serverPass = Read-Host 'What is the server root password:' -AsSecureString
+$serverCred = Get-Credential -Message 'What is the server root password:' -UserName "root"
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
-Connect-VIServer serverip -user "root" -password $serverPass
-Get-VMHostFirmware -vmhost serverip -BackupConfiguration -DestinationPath $path 
+Connect-VIServer $serverIp -Credential $serverCred
+Get-VMHostFirmware -vmhost $serverIp -BackupConfiguration -DestinationPath $path 
